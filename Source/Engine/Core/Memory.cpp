@@ -2,7 +2,7 @@
 #include <iostream>
 
 using namespace std;
-kiko::MemoryTracker g_memoryTracker;
+kiko::MemoryTracker kiko::g_memoryTracker;
 
 void* operator new (size_t size)
 {

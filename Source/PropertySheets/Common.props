@@ -11,7 +11,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>$(BinDir)</OutDir>
-    <IntDir>$(TargetDir)</IntDir>
+    <IntDir>$(TempDir)</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <PostBuildEvent>
@@ -21,7 +21,7 @@
     <ClCompile />
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(GameDir);$(EngineDir);$(ThirdPartyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineDir);$(ThirdPartyDir);$(GameDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
