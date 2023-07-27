@@ -1,6 +1,5 @@
 #include "Font.h"
 #include "SDL2-2.28.1/include/SDL_ttf.h"
-#include <iostream>
 
 namespace kiko
 {
@@ -19,15 +18,13 @@ namespace kiko
 
 	void Font::Load(const std::string& filename, int fontSize)
 	{
+		/*
+		<call TTF_OpenFont>
+		<use filename.c_str() to get the c-style string>
+		<assign the return value of TTF_OpenFont to m_ttfFont>
+		*/
+
 		// Use filename.c_str() to get the C-style string.
-		const char* cFilename = filename.c_str();
-
-		// Load the font using TTF_OpenFont and assign the result to m_ttfFont.
-		m_ttfFont = TTF_OpenFont(cFilename, fontSize);
-
-		if (m_ttfFont == nullptr)
-		{
-			std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
-		}
+		m_ttfFont = TTF_OpenFont(filename.c_str(), fontSize);
 	}
 }

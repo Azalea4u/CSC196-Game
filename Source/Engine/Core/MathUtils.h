@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include <utility>
 
 namespace kiko
 {
@@ -40,5 +41,11 @@ namespace kiko
 
 		return (value < min) ? min : (value > max) ? max : value;
 		// if value < min, return min, else if value > max, return max, else return value
+	}
+
+	template <typename T>
+	inline T Lerp(const T& a, const T& b, float t)
+	{
+		return (a * (1.0f - t)) + (b * t);
 	}
 }

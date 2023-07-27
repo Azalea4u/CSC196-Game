@@ -38,13 +38,13 @@ namespace kiko
 		}
 	}
 
-	void kiko::AudioSystem::PlayOneShot(const std::string& name)
+	void kiko::AudioSystem::PlayOneShot(const std::string& name, bool loop)
 	{
 		auto iter = m_sounds.find(name);
 		if (iter != m_sounds.end())
 		{
 			FMOD::Sound* sound = iter->second;
-			sound->setMode(FMOD_LOOP_OFF);
+			sound->setMode(loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF);
 
 			FMOD::Channel* channel;
 			m_fmodSystem->playSound(sound, 0, false, &channel);

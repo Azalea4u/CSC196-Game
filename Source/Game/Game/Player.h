@@ -17,7 +17,4 @@ public:
 private:
 	float m_speed = 0;
 	float m_turnRate = 0;
-
-	// WIP, adding health
-	float m_health = 100;
 };

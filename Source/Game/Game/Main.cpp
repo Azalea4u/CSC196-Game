@@ -2,6 +2,7 @@
 #include "Core/Core.h"
 #include "Renderer/ModelManager.h"
 #include "Renderer/Text.h"
+#include "Renderer/ParticleSystem.h"
 #include "Input/InputSystem.h"
 #include "Audio/AudioSystem.h"
 #include "FrameWork/Scene.h"
@@ -14,6 +15,7 @@
 #include <vector>
 #include <thread>
 #include <memory>
+#include <FrameWork/Emitter.h>
 
 using namespace std;
 using vec2 = kiko::Vector2;
@@ -86,6 +88,7 @@ int main(int argc, char* argv[])
 		kiko::g_time.Tick();
 		kiko::g_inputSystem.Update();
 		kiko::g_audioSystem.Update();
+		kiko::g_particleSystem.Update(kiko::g_time.GetDeltaTime());
 		if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_ESCAPE))
 		{
 			quit = true;
@@ -93,8 +96,30 @@ int main(int argc, char* argv[])
 
 		if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_SPACE))
 		{
-			kiko::g_audioSystem.PlayOneShot("Laser");
+			kiko::g_audioSystem.PlayOneShot("Laser", false);
 		}
+		
+		
+		if (kiko::g_inputSystem.GetMouseButtonDown(0))
+		{
+			kiko::EmitterData data;
+			data.burst = true;
+			data.burstCount = 100;
+			data.spawnRate = 200;
+			data.angle = 0;
+			data.angleRange = kiko::Pi;
+			data.lifetimeMin = 0.5f;
+			data.lifetimeMin = 1.5f;
+			data.speedMin = 50;
+			data.speedMax = 250;
+			data.damping = 0.5f;
+			data.color = kiko::Color{ 1, 0, 0, 1 };
+			kiko::Transform transform{ { kiko::g_inputSystem.GetMousePosition() }, 0, 1 };
+			auto emitter = std::make_unique<kiko::Emitter>(transform, data);
+			emitter->m_lifespan = 0.1f;
+			game->m_scene->Add(std::move(emitter));
+		}
+		
 
 		// update game
 		game->Update(kiko::g_time.GetDeltaTime());
@@ -110,6 +135,7 @@ int main(int argc, char* argv[])
 		}
 
 		game->Draw(kiko::g_renderer);
+ 		kiko::g_particleSystem.Draw(kiko::g_renderer);
 
 		//text->Draw(kiko::g_renderer, 40, 30);
 
